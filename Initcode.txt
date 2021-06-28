@@ -1,0 +1,9 @@
+
+app.use('/', function(req, res, next) {
+	console.log('main page');
+	res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
+	res.write('<h1>Android Server Main Test</h1>');
+	res.write('Android Server Sender Module by Express');
+	res.end();
+});
+
