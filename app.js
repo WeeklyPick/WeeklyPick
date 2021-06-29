@@ -1,6 +1,15 @@
 const express = require('express');
 const app = express();
+const searchdata = [];
+
+
 var fs = require('fs');
+
+app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+
+
+
 let sizedata = [
 	{
 		XS: {
@@ -86,6 +95,34 @@ let clothdata = [
    res.json(clothdata)
  });
 
+app.post('/search', (req, res) => {
+	
+	console.log(req.body.chest);
+	console.log(req.body.shoulder);
+	//req.body.sleeves
+	//req.body.tots
+	//req.body.color
+	//req.body.material
+	//var s_chest = req.body.chest;
+	//var s_shoulder = req.body.shoulder;
+	//var s_sleeves = req.body.sleeves;
+	//var s_tots = req.body.tots;
+	//var s_color = req.body.color;
+	searchdata.push({chest: req.body.chest, shoulder:req.body.shoulder, sleeves: req.body.sleeves, tots: req.body.tots, color: req.body.color, material: req.body.material});
+	//console.log(s_chest);
+	//res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
+	//res.write(searchdata[0].material);
+	//res.end();
+	var result = [{name: "TESTNAME", brand: "TESTBRAND", image: "DUMMYIMAGE",data:searchdata[0]}];
+	res.json(result);
+	//DB 구조에 따라 다소 변경 가능
+	//데이터베이스 검색 및 반환 예정
+
+})
+
+
+
+
  app.get('/size', (req, res) => {
 	 console.log('SIZE DATA 조회');
 	 res.json(sizedata)
@@ -102,6 +139,7 @@ let clothdata = [
 	);
 
  });
+ //이미지 반환 stub-code
  
  app.post('/post', (req, res) => {
    console.log('who get in here post /users');
@@ -119,6 +157,6 @@ let clothdata = [
    res.end();
  });
  
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+app.listen(80, () => {
+  console.log('WeeklyPick Listening on Port 80');
 });
